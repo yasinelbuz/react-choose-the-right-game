@@ -19,7 +19,8 @@ function App() {
 
   const chooseRightClick = (index, color) => {
     
-    random = Math.floor(Math.random() * 4) + 1;
+    if(score > 10)
+      random = Math.floor(Math.random() * 4) + 1;
 
     if(random === index){
       setScore(0);
