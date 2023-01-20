@@ -21,6 +21,9 @@ function App() {
     
     if(score > 10)
       random = Math.floor(Math.random() * 4) + 1;
+    else{
+      random = null;
+    }
 
     if(random === index){
       setScore(0);
