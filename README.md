@@ -1,4 +1,4 @@
-# Choose the Game
+# Choose the Right
 
 _"Color guessing game”_
 
