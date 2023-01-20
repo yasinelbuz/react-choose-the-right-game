@@ -5,7 +5,6 @@ import falling from './assets/falling.wav';
 
 const boxColors = ["bg-red-500","bg-yellow-500","bg-blue-500","bg-green-500"];
 let random = null;
-let prevRandom = null;
 
 function App() {
   //
@@ -20,12 +19,7 @@ function App() {
 
   const chooseRightClick = (index, color) => {
     
-    //random value
-    do{
-      random = Math.floor(Math.random() * 4) + 1;
-    }while(prevRandom == random)
-
-    prevRandom = random;  
+    random = Math.floor(Math.random() * 4) + 1;
 
     if(random === index){
       setScore(0);
