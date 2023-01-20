@@ -11,10 +11,9 @@ You should try not to find fault.
 - [Installation](#installation)
 - [Starting project](#starting-project)
 - [Links](#links)
-- [Built with](#built-with)
 
 ## Demo
-
+![alt text](https://raw.githubusercontent.com/yasinelbuz/react-choose-the-right-game/master/game.png)
 
 
 ## Installation
@@ -32,4 +31,4 @@ pnpm run dev
 ## Links
 
 - [Github](https://github.com/yasinelbuz/choose-the-right)
-- [Deployment](---)
+- [Deployment](https://choose-the-right.vercel.app/)
