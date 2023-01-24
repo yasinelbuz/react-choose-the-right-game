@@ -1,50 +1,58 @@
 import 'animate.css';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 import clickSuccesSound from './assets/success.wav';
 import falling from './assets/falling.wav';
+import { TbMusicOff } from 'react-icons/tb';
+import { TbMusic } from 'react-icons/tb';
 
-const boxColors = ["bg-red-500","bg-yellow-500","bg-blue-500","bg-green-500"];
+const boxColors = ["bg-red-500", "bg-yellow-500", "bg-blue-500", "bg-green-500"];
 let random = null;
 
 function App() {
-  //
-  //state
-  const [bestScore, setBestScore] = useState(0);
+  // state
+  const [bestScore, setBestScore] = useState(localStorage.getItem("bestScore") || 0);
   const [score, setScore] = useState(0);
+  const [music, setMusic] = useState(true)
 
-  //sounds
+  // sounds
   const successSound = new Audio(clickSuccesSound);
   const gameOverSound = new Audio(falling);
 
+  const chooseRightClick = (index) => {
 
-  const chooseRightClick = (index, color) => {
-    
-    if(score > 10)
+    if (score > 10) {
       random = Math.floor(Math.random() * 4) + 1;
-    else{
+    } else {
       random = null;
     }
 
-    if(random === index){
+    if (random === index) {
+
       setScore(0);
       setBestScore(bestScore < score ? score : bestScore);
-      gameOverSound.play();
+      if (music) {
+        successSound.play();
+      }
       document.querySelector(`#box-${index}`).classList += " animate__flip";
-    }else{
+    } else {
+
       setScore(prev => prev + 1);
-      successSound.play();
+      if (music) {
+        successSound.play();
+      }
       document.querySelector(`#box-${index}`).classList += " animate__flash";
     }
-      
-      setTimeout(() => {
-          document.querySelector(`#box-${index}`).classList = `${color} w-[150px] h-[150px] animate__animated`;
 
-          //sound
-          successSound.pause();
-          gameOverSound.pause();
-      }, 1000);
-
+    setTimeout(() => {
+      document.querySelector(`#box-${index}`).classList = `${boxColors[index - 1]} w-[150px] h-[150px] animate__animated`;
+      successSound.pause();
+      gameOverSound.pause();
+    }, 1000);
   }
+
+  useEffect(() => {
+    localStorage.setItem("bestScore", bestScore);
+  }, [bestScore])
 
   return (
     <div className="flex justify-center items-center h-full w-full">
@@ -54,21 +62,23 @@ function App() {
           <h1><b>score</b> : {score}</h1>
         </div>
         <div className="w-[300px] h-[300px] bg-gray-200 flex flex-wrap cursor-pointer border-black">
-
           {
-            boxColors.map((color, index) => 
-            <div 
-              key={index}
-              className={`${color} w-[150px] h-[150px] animate__animated`}
-              id={`box-${index + 1}`}
-              onClick={() => chooseRightClick(index + 1, color)}>
-            </div>)
+            boxColors.map((color, index) =>
+              <div
+                key={index}
+                className={`${boxColors[index]} w-[150px] h-[150px] animate__animated`}
+                id={`box-${index + 1}`}
+                onClick={() => chooseRightClick(index + 1)}>
+              </div>)
           }
-          
-          
         </div>
-        <div className="absolute right-2 top-2">
-          <a href="https://github.com/yasinelbuz" className="mt-2 text-blue-600 font-bold" target="_blank">@yasinelbuz</a>
+        <div className="absolute right-1 top-1">
+          <a href="https://github.com/yasinelbuz" className="mt-2 text-blue-600 font-bold flex" target="_blank">@yasinelbuz</a>
+          <div className='flex justify-end items-center' onClick={() => setMusic(!music)}>
+            {
+              music ? <TbMusic className='h-16 w-11 cursor-pointer' color='green' /> : <TbMusicOff className='h-16 w-11 cursor-pointer' color='red' />
+            }
+          </div>
         </div>
       </div>
     </div>
